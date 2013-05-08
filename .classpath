@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/kafka_2.9.2-0.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/scala-library-2.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/storm-0.9.0-wip15.jar"/>
+	<classpathentry kind="lib" path="lib/zkclient-0.1.jar"/>
+	<classpathentry kind="lib" path="lib/curator-framework-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/curator-client-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/zookeeper-3.4.5.jar"/>
+	<classpathentry kind="lib" path="lib/google-collections-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/clojure-1.4.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

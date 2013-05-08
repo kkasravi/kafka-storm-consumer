@@ -1,0 +1,10 @@
+#!/bin/ksh
+cwd=/Users/kamkasravi/kafka-storm-consumer
+for i in src/*.es;
+do
+cd ~/transpiler
+a=
+b=.js
+echo /
+bin/transpiler / > /lib/
+done

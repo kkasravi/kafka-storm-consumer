@@ -11,6 +11,9 @@ import java.util.TreeMap;
 
 import kafka.api.FetchRequest;
 import kafka.api.OffsetRequest;
+import kafka.api.PartitionOffsetRequestInfo;
+import kafka.api.Request;
+import kafka.common.TopicAndPartition;
 import kafka.javaapi.consumer.SimpleConsumer;
 import kafka.javaapi.message.ByteBufferMessageSet;
 import kafka.message.Message;
@@ -67,7 +70,12 @@ public class KafkaUtils {
                  lastInstanceId = (String) lastTopoMeta.get("id");
              }
              if(config.forceFromStart && !topologyInstanceId.equals(lastInstanceId)) {
-                 offset = consumer.getOffsetsBefore(config.topic, partition.partition, config.startOffsetTime, 1)[0];
+            	 TopicAndPartition tp = new TopicAndPartition(config.topic, partition.partition);
+            	 PartitionOffsetRequestInfo pi = new PartitionOffsetRequestInfo(partition.partition, (int)config.startOffsetTime);
+            	 Map<TopicAndPartition,PartitionOffsetRequestInfo> map = new HashMap<TopicAndPartition,PartitionOffsetRequestInfo>();
+            	 map.put(tp,pi);
+            	 OffsetRequest offsetrequest = new OffsetRequest((scala.collection.immutable.Map<TopicAndPartition, PartitionOffsetRequestInfo>) map,OffsetRequest.CurrentVersion(),0,OffsetRequest.DefaultClientId(),Request.OrdinaryConsumerId());
+                 offset = consumer.getOffsetsBefore(offsetrequest);
              } else {
                  offset = (Long) lastMeta.get("nextOffset");
              }

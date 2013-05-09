@@ -31,7 +31,7 @@ public class DynamicPartitionConnections {
     
     public SimpleConsumer register(HostPort host, int partition) {
         if(!_connections.containsKey(host)) {
-            _connections.put(host, new ConnectionInfo(new SimpleConsumer(host.host, host.port, _config.socketTimeoutMs, _config.bufferSizeBytes)));
+            _connections.put(host, new ConnectionInfo(new SimpleConsumer(host.host, host.port, _config.socketTimeoutMs, _config.bufferSizeBytes, new Integer(partition).toString())));
         }
         ConnectionInfo info = _connections.get(host);
         info.partitions.add(partition);

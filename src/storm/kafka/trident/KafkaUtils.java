@@ -74,7 +74,8 @@ public class KafkaUtils {
             	 PartitionOffsetRequestInfo pi = new PartitionOffsetRequestInfo(partition.partition, (int)config.startOffsetTime);
             	 Map<TopicAndPartition,PartitionOffsetRequestInfo> map = new HashMap<TopicAndPartition,PartitionOffsetRequestInfo>();
             	 map.put(tp,pi);
-            	 OffsetRequest offsetrequest = new OffsetRequest((scala.collection.immutable.Map<TopicAndPartition, PartitionOffsetRequestInfo>) map,OffsetRequest.CurrentVersion(),0,OffsetRequest.DefaultClientId(),Request.OrdinaryConsumerId());
+                 kafka.javaapi.OffsetRequest request = new kafka.javaapi.OffsetRequest(
+                         requestInfo, kafka.api.OffsetRequest.CurrentVersion(), clientName);
                  offset = consumer.getOffsetsBefore(offsetrequest);
              } else {
                  offset = (Long) lastMeta.get("nextOffset");

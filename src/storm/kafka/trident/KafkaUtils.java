@@ -12,8 +12,8 @@ import java.util.TreeMap;
 import kafka.api.FetchRequest;
 import kafka.api.OffsetRequest;
 import kafka.api.PartitionOffsetRequestInfo;
-import kafka.api.Request;
 import kafka.common.TopicAndPartition;
+import kafka.javaapi.OffsetResponse;
 import kafka.javaapi.consumer.SimpleConsumer;
 import kafka.javaapi.message.ByteBufferMessageSet;
 import kafka.message.Message;
@@ -62,7 +62,8 @@ public class KafkaUtils {
 
      public static Map emitPartitionBatchNew(TridentKafkaConfig config, SimpleConsumer consumer, GlobalPartitionId partition, TridentCollector collector, Map lastMeta, String topologyInstanceId, String topologyName,
                                                ReducedMetric meanMetric, CombinedMetric maxMetric) {
-         long offset;
+         OffsetResponse offsetResponse;
+         Long offset;
          if(lastMeta!=null) {
              String lastInstanceId = null;
              Map lastTopoMeta = (Map) lastMeta.get("topology");
@@ -74,16 +75,15 @@ public class KafkaUtils {
             	 PartitionOffsetRequestInfo pi = new PartitionOffsetRequestInfo(partition.partition, (int)config.startOffsetTime);
             	 Map<TopicAndPartition,PartitionOffsetRequestInfo> map = new HashMap<TopicAndPartition,PartitionOffsetRequestInfo>();
             	 map.put(tp,pi);
-                 kafka.javaapi.OffsetRequest request = new kafka.javaapi.OffsetRequest(
-                         requestInfo, kafka.api.OffsetRequest.CurrentVersion(), clientName);
-                 offset = consumer.getOffsetsBefore(offsetrequest);
+                 kafka.javaapi.OffsetRequest offsetRequest = new kafka.javaapi.OffsetRequest((Map<TopicAndPartition, PartitionOffsetRequestInfo>) pi, kafka.api.OffsetRequest.CurrentVersion(),"ID");
+                 offsetResponse = consumer.getOffsetsBefore(offsetRequest);
              } else {
                  offset = (Long) lastMeta.get("nextOffset");
              }
          } else {
              long startTime = -1;
              if(config.forceFromStart) startTime = config.startOffsetTime;
-             offset = consumer.getOffsetsBefore(config.topic, partition.partition, startTime, 1)[0];
+             offsetResponse = consumer.getOffsetsBefore(config.topic, partition.partition, startTime, 1)[0];
          }
          ByteBufferMessageSet msgs;
          try {

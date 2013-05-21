@@ -1,0 +1,36 @@
+protocol CDR {
+  fixed xd_type(1);
+  fixed bus_type(15);
+  fixed subbus_type(2);
+  fixed rat_type(1);
+  fixed dis_code(32);
+  fixed direct_type(1);
+  fixed visit_switch_flag(2);
+  fixed roam_type(1);
+  fixed b_operator(2);
+  fixed b_switch_flag(2);
+  fixed b_brand(1);
+  fixed b_user_type(2);
+  fixed icp_stat(2);
+  fixed dis_dura(7);
+  fixed dis_fee(8);
+  fixed Reserve2(30);
+  fixed relation(2);
+  fixed msisdnB(24);
+  fixed real_msisdn(24);
+  fixed cdr_tag(2);
+  fixed srv_tag(2);
+  fixed direct_tag(1);
+  fixed vpmn_tag(1);
+  fixed sp_code(20);
+  fixed op_code(30);
+  fixed cdr_fee(8);
+  fixed chrg_type(2);
+  fixed duration(7);
+  fixed srv_type(10);
+  fixed channel_id(8);
+  fixed extend_one(2);
+  fixed extend_two(30);
+  fixed Reserve3(30);
+  fixed end(2) = '\r\n';
+}
